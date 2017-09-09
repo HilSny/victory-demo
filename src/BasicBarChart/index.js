@@ -20,7 +20,7 @@ const BasicBarChart = () => {
   const tickValues = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 
   return (
-    <VictoryChart domainPadding={20} title="Some cool stuff">
+    <VictoryChart domainPadding={20}>
       <VictoryAxis
         dependentAxis
         style={{
@@ -40,6 +40,20 @@ const BasicBarChart = () => {
 
       <VictoryBar
         data={data}
+        events={[{
+          target: 'data',
+          eventHandlers: {
+            onClick: () => {
+              return [{
+                target: 'data',
+                mutation: props => {
+                  const fill = props.style.fill
+                  return fill === 'blue' ? {style: {fill: 'green'}} : {style: {fill: 'blue'}}
+                }
+              }]
+            }
+          }
+        }]}
         style={{
           data: {
             fill: 'blue'
