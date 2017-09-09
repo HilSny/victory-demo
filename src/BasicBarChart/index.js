@@ -1,4 +1,4 @@
-import {VictoryBar, VictoryChart} from 'victory'
+import {VictoryAxis, VictoryBar, VictoryChart} from 'victory'
 
 import React from 'react'
 
@@ -12,6 +12,15 @@ const BasicBarChart = () => {
   ]
   return (
     <VictoryChart domainPadding={20}>
+      <VictoryAxis
+        independentAxis
+        tickFormat={t => Math.floor(t)}
+      />
+
+      <VictoryAxis
+        dependentAxis
+      />
+
       <VictoryBar
         data={data}
       />
