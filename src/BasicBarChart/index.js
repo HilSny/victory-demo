@@ -44,13 +44,22 @@ const BasicBarChart = () => {
           target: 'data',
           eventHandlers: {
             onClick: () => {
-              return [{
-                target: 'data',
-                mutation: props => {
-                  const fill = props.style.fill
-                  return fill === 'blue' ? {style: {fill: 'green'}} : {style: {fill: 'blue'}}
+              return [
+                {
+                  target: 'data',
+                  mutation: props => {
+                    const fill = props.style.fill
+                    return fill === 'blue' ? {style: {fill: 'green'}} : {style: {fill: 'blue'}}
+                  }
+                },
+
+                {
+                  target: 'labels',
+                  mutation: props => {
+                    return props.text ? null : {text: 'clicked'}
+                  }
                 }
-              }]
+              ]
             }
           }
         }]}
