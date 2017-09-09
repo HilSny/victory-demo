@@ -1,7 +1,12 @@
-import {VictoryAxis, VictoryBar, VictoryChart} from 'victory'
+import {VictoryAxis, VictoryBar, VictoryChart, VictoryLabel} from 'victory'
 
 import React from 'react'
 import numeral from 'numeral'
+
+const CustomVictoryLabel = props => {
+  const showLabel = props.datum % 2000 ? false : true
+  return showLabel ? <VictoryLabel {...props} /> : null
+}
 
 const BasicBarChart = () => {
   const data = [
@@ -15,26 +20,31 @@ const BasicBarChart = () => {
   const tickValues = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 
   return (
-    <VictoryChart domainPadding={20}>
+    <VictoryChart domainPadding={20} title="Some cool stuff">
       <VictoryAxis
-        independentAxis
+        dependentAxis
         style={{
           grid: {
-            stroke: 'gray',
+            stroke: d => d % 2000 ? 'transparent' : 'grey'
           }
         }}
+        tickLabelComponent={<CustomVictoryLabel />}
         tickFormat={t => numeral(t).format(0,0)}
         tickValues={tickValues}
       />
 
       <VictoryAxis
-        dependentAxis
+        independentAxis
         tickFormat={t => Math.floor(t)}
       />
 
       <VictoryBar
-        horizontal
         data={data}
+        style={{
+          data: {
+            fill: 'blue'
+          }
+        }}
       />
     </VictoryChart>
   )
