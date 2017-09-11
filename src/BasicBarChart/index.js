@@ -56,9 +56,17 @@ class BasicBarChart extends Component {
               return [
                 {
                   childName: 'xAxis',
+                  eventKey : 'all',
                   target   : 'tickLabels',
                   mutation : (props) => {
-                    return props.datum === this.state.activeBar ? {style: {fill: 'red'}} : {style: {fill: 'blue'}}
+                    return {style: {fill: 'black'}}
+                  }
+                },
+                {
+                  childName: 'xAxis',
+                  target   : 'tickLabels',
+                  mutation : (props) => {
+                    return {style: {fill: 'red'}}
                   }
                 }
               ]
