@@ -52,6 +52,16 @@ class BasicBarChart extends Component {
           eventHandlers: {
             onClick: (evt, evtData) => {
               this.setActiveBar(evtData.datum.x)
+
+              return [
+                {
+                  childName: 'xAxis',
+                  target   : 'tickLabels',
+                  mutation : (props) => {
+                    return props.datum === this.state.activeBar ? {style: {fill: 'red'}} : {style: {fill: 'blue'}}
+                  }
+                }
+              ]
             }
           }
         }]}
@@ -69,6 +79,7 @@ class BasicBarChart extends Component {
         />
 
         <VictoryAxis
+          name="xAxis"
           independentAxis
           tickFormat={t => Math.floor(t)}
         />
