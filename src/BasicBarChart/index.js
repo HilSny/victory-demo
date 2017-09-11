@@ -44,7 +44,18 @@ class BasicBarChart extends Component {
     const tickValues = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 
     return (
-      <VictoryChart domainPadding={20}>
+      <VictoryChart
+        domainPadding={20}
+        events={[{
+          childName    :"all",
+          target       : 'data',
+          eventHandlers: {
+            onClick: (evt, evtData) => {
+              this.setActiveBar(evtData.datum.x)
+            }
+          }
+        }]}
+      >
         <VictoryAxis
           dependentAxis
           style={{
@@ -66,34 +77,10 @@ class BasicBarChart extends Component {
           data={data}
           labels={d => d.y}
           labelComponent={<CustomTooltip activeBar={this.state.activeBar} />}
-          events={[{
-            target: 'data',
-            eventHandlers: {
-              onClick: (evt, evtData) => {
-                this.setActiveBar(evtData.datum.x)
 
-                return [
-                  {
-                    target: 'data',
-                    mutation: props => {
-                      const fill = props.style.fill
-                      return fill === 'blue' ? {style: {fill: 'green'}} : {style: {fill: 'blue'}}
-                    }
-                  },
-
-                  {
-                    target: 'labels',
-                    mutation: props => {
-                      return props.text ? null : {text: 'clicked'}
-                    }
-                  }
-                ]
-              }
-            }
-          }]}
           style={{
             data: {
-              fill: 'blue'
+              fill: d => d.x === this.state.activeBar ? 'green' : 'blue'
             }
           }}
         />
